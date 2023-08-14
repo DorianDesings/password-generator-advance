@@ -8,6 +8,7 @@
   --primary-shadow: rgb(0 0 0 / 0.25);
   --secondary-color: #7400e4;
   --accent-color: #7400e4;
+  --gradient-color: linear-gradient(to right, #7944e7, #8300ab);
   --cta-color: #a200d4;
   --cta-color-hover: #8502ad;
   --text-color: #fff;
@@ -22,6 +23,7 @@ body {
   color: var(--text-color);
   background-color: var(--body-bg-color);
   font-family: 'DM Mono', monospace;
+  user-select: none;
 }
 
 .password-generator {
@@ -70,7 +72,7 @@ body {
   box-shadow: 0 4px 4px var(--primary-shadow);
   border-radius: 0.5rem;
   font-size: 1.25rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .range-label {
@@ -85,12 +87,57 @@ body {
   accent-color: var(--accent-color);
 }
 
+.input-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  margin-bottom: 1rem;
+  padding: 20px;
+  border-radius: 0.5rem;
+  background-color: #241442;
+}
+
+.option-input {
+  display: none;
+}
+
+.option-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 65px;
+  height: 40px;
+  border-radius: 2rem;
+  background-color: grey;
+  transition: background-color 0.3s;
+}
+
+.option-label::after {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: transform 0.3s;
+}
+
+.option-input:checked + .option-label {
+  background-color: #7400e4;
+}
+
+.option-input:checked + .option-label::after {
+  transform: translateX(calc(50px - 100%));
+}
+
 .button {
   height: 60px;
   width: 100%;
   border: none;
   color: inherit;
-  background-color: var(--cta-color);
+  background-image: var(--gradient-color);
   box-shadow: 0 4px 4px var(--primary-shadow);
   border-radius: 0.5rem;
   font-size: 1rem;
@@ -99,7 +146,12 @@ body {
   transition: transform 0.2s, background-color 0.2s;
 }
 
-.button:hover {
+.button:not(:disabled):hover {
   transform: scale(0.95);
   background-color: var(--cta-color-hover);
+}
+
+.button:disabled {
+  background-color: rgb(64, 63, 63);
+  cursor: not-allowed;
 }
