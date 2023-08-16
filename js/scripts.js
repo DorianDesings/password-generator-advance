@@ -3,33 +3,26 @@ const lengthTextElement = document.getElementById('length-text');
 const rangeElement = document.getElementById('range');
 const buttonGenerateElement = document.getElementById('generate-password');
 
-const uppercaseInputElement = document.getElementById('uppercase-input');
-const lowercaseInputElement = document.getElementById('lowercase-input');
-const numbersInputElement = document.getElementById('numbers-input');
-const symbolsInputElement = document.getElementById('symbols-input');
-
-/* 
-id a cada checkbox
-un if por cada checkbox
-------------------------
-*/
-
-const lowercaseCharacters = 'abcdefghijklmnñopqrstuvwxyz';
-const uppercasCharacters = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ';
-const numbersCharacters = '1234567890';
-const symbolsCharacters = '+-.,!"·$%&/()=?{}';
+const uppercaseInputElement = document.getElementById('uppercase');
+const lowercaseInputElement = document.getElementById('lowercase');
+const numbersInputElement = document.getElementById('numbers');
+const symbolsInputElement = document.getElementById('symbols');
 
 let allowedCharacters = '';
 
-// const allowedCharacters = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890+-.,!"·$%&/()=?{}';
+const passwordOptions = {
+  lowercase: 'abcdefghijklmnñopqrstuvwxyz',
+  uppercase: 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ',
+  numbers: '1234567890',
+  symbols: '+-.,!"·$%&/()=?{}',
+  passwordLength: rangeElement.value
+};
 
-let passwordLength = rangeElement.value;
-
-lengthTextElement.textContent = passwordLength;
+lengthTextElement.textContent = passwordOptions.passwordLength;
 
 const setPasswordLenght = event => {
-  passwordLength = event.target.value;
-  lengthTextElement.textContent = passwordLength;
+  passwordOptions.passwordLength = event.target.value;
+  lengthTextElement.textContent = passwordOptions.passwordLength;
 };
 
 const printPassword = password => {
@@ -37,66 +30,28 @@ const printPassword = password => {
 };
 
 const setDisabledButton = () => {
-  if (allowedCharacters.length) buttonGenerateElement.disabled = false;
-  else buttonGenerateElement.disabled = true;
+  buttonGenerateElement.disabled = !allowedCharacters.length;
 };
 
 const checkPasswordOptions = () => {
   allowedCharacters = '';
-  if (lowercaseInputElement.checked) {
-    allowedCharacters += lowercaseCharacters;
-  }
-  if (uppercaseInputElement.checked) {
-    allowedCharacters += uppercasCharacters;
-  }
-  if (numbersInputElement.checked) {
-    allowedCharacters += numbersCharacters;
-  }
-  if (symbolsInputElement.checked) {
-    allowedCharacters += symbolsCharacters;
-  }
+  const allCheckbox = document.querySelectorAll("input[type='checkbox']:checked");
+  allCheckbox.forEach(checkbox => {
+    allowedCharacters += passwordOptions[checkbox.id];
+  });
 
   setDisabledButton();
 };
 
 const generatePassword = () => {
   let newPassword = '';
-  let newPasswordLength = passwordLength;
-
-  if (lowercaseInputElement.checked) {
-    const randomNumber = Math.floor(Math.random() * lowercaseCharacters.length);
-    newPassword += lowercaseCharacters.charAt(randomNumber);
-    newPasswordLength--;
-  }
-
-  if (uppercaseInputElement.checked) {
-    const randomNumber = Math.floor(Math.random() * uppercasCharacters.length);
-    newPassword += uppercasCharacters.charAt(randomNumber);
-    newPasswordLength--;
-  }
-
-  if (numbersInputElement.checked) {
-    const randomNumber = Math.floor(Math.random() * numbersCharacters.length);
-    newPassword += numbersCharacters.charAt(randomNumber);
-    newPasswordLength--;
-  }
-
-  if (symbolsInputElement.checked) {
-    const randomNumber = Math.floor(Math.random() * symbolsCharacters.length);
-    newPassword += symbolsCharacters.charAt(randomNumber);
-    newPasswordLength--;
-  }
+  let newPasswordLength = passwordOptions.passwordLength;
 
   for (let index = 0; index < newPasswordLength; index++) {
     const randomNumber = Math.floor(Math.random() * allowedCharacters.length);
     const randomCharacter = allowedCharacters.charAt(randomNumber);
     newPassword += randomCharacter;
   }
-
-  newPassword = newPassword
-    .split('')
-    .sort(() => Math.random() - 0.5)
-    .join('');
 
   printPassword(newPassword);
 };

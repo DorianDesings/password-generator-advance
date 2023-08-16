@@ -106,7 +106,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  width: 65px;
+  width: 75px;
   height: 40px;
   border-radius: 2rem;
   background-color: grey;
@@ -116,7 +116,7 @@ body {
 .option-label::after {
   content: '';
   position: absolute;
-  left: 0.5rem;
+  left: 8px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -129,7 +129,7 @@ body {
 }
 
 .option-input:checked + .option-label::after {
-  transform: translateX(calc(50px - 100%));
+  transform: translateX(100%);
 }
 
 .button {
@@ -152,6 +152,7 @@ body {
 }
 
 .button:disabled {
+  background-image: none;
   background-color: rgb(64, 63, 63);
   cursor: not-allowed;
 }
