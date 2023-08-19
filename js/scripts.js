@@ -3,10 +3,7 @@ const lengthTextElement = document.getElementById('length-text');
 const rangeElement = document.getElementById('range');
 const buttonGenerateElement = document.getElementById('generate-password');
 
-const uppercaseInputElement = document.getElementById('uppercase');
-const lowercaseInputElement = document.getElementById('lowercase');
-const numbersInputElement = document.getElementById('numbers');
-const symbolsInputElement = document.getElementById('symbols');
+const optionsElement = document.getElementById('options');
 
 let allowedCharacters = '';
 
@@ -60,7 +57,7 @@ rangeElement.addEventListener('input', setPasswordLenght);
 
 buttonGenerateElement.addEventListener('click', generatePassword);
 
-uppercaseInputElement.addEventListener('click', checkPasswordOptions);
-lowercaseInputElement.addEventListener('click', checkPasswordOptions);
-numbersInputElement.addEventListener('click', checkPasswordOptions);
-symbolsInputElement.addEventListener('click', checkPasswordOptions);
+optionsElement.addEventListener('click', event => {
+  if (event.target.type !== 'checkbox') return;
+  checkPasswordOptions();
+});
