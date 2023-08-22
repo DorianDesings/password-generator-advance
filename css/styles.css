@@ -10,7 +10,6 @@
   --accent-color: #7400e4;
   --gradient-color: linear-gradient(to right, #7944e7, #8300ab);
   --cta-color: #a200d4;
-  --cta-color-hover: #8502ad;
   --text-color: #fff;
 }
 
@@ -143,16 +142,14 @@ body {
   font-size: 1rem;
   letter-spacing: 4px;
   cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
+  transition: transform 0.2s;
 }
 
 .button:not(:disabled):hover {
   transform: scale(0.95);
-  background-color: var(--cta-color-hover);
 }
 
 .button:disabled {
   background-image: none;
-  background-color: rgb(64, 63, 63);
   cursor: not-allowed;
 }
